@@ -22,19 +22,19 @@ public class Player extends GameObject {
 
     @Override
     public void run(){
+        if (KeyEventPress.isUpPress) {
+            this.move(0, -1);
+        }
+        if (KeyEventPress.isDownPress) {
+            this.move(0, 1);
+        }
+        if (KeyEventPress.isLeftPress) {
+            this.move(1, 0);
+        }
+        if (KeyEventPress.isRightPress) {
+            this.move(-1, 0);
+        }
 
-        if(KeyEventPress.isUpPress){
-            this.move(0,-1);
-        }
-        if(KeyEventPress.isDownPress){
-            this.move(0,1);
-        }
-        if(KeyEventPress.isLeftPress){
-            this.move(1,0);
-        }
-        if(KeyEventPress.isRightPress){
-            this.move(-1,0);
-        }
     }
 
 }
