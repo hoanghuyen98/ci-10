@@ -2,6 +2,7 @@ package Game;
 
 import Game.GameCanvas;
 import base.KeyEventPress;
+import base.Player;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -28,33 +29,39 @@ public class GameWindow extends JFrame {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_W){
+                if (e.getKeyCode() == KeyEvent.VK_UP){
                     KeyEventPress.isUpPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_S){
+                if (e.getKeyCode() == KeyEvent.VK_DOWN){
                     KeyEventPress.isDownPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_D){
+                if (e.getKeyCode() == KeyEvent.VK_LEFT){
                     KeyEventPress.isLeftPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_A){
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT){
                     KeyEventPress.isRightPress = true;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                    KeyEventPress.isSpacePress = true;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_W){
+                if (e.getKeyCode() == KeyEvent.VK_UP){
                     KeyEventPress.isUpPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_S){
+                if (e.getKeyCode() == KeyEvent.VK_DOWN){
                     KeyEventPress.isDownPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_D){
+                if (e.getKeyCode() == KeyEvent.VK_LEFT){
                     KeyEventPress.isLeftPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_A){
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT){
                     KeyEventPress.isRightPress = false;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                    KeyEventPress.isSpacePress = false;
                 }
             }
 
@@ -63,7 +70,7 @@ public class GameWindow extends JFrame {
     }
 
 
-    void gameLoop() {
+    public void gameLoop() {
         long delay = 1000/60;
         long lastTime = 0;
         while (true) {
