@@ -1,9 +1,9 @@
 package base;
 
 public class KeyEventPress {
-    public static boolean isUpPress;
-    public static boolean isDownPress;
-    public static boolean isLeftPress;
-    public static boolean isRightPress;
-    public static boolean isSpacePress;
+    static public boolean isUpPress;
+    static public boolean isDownPress;
+    static public boolean isLeftPress;
+    static public boolean isRightPress;
+    static public boolean isFirePress;
 }

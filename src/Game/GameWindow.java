@@ -1,89 +1,83 @@
-package Game;
+package game;
 
-import Game.GameCanvas;
+import base.GameObject;
 import base.KeyEventPress;
-import base.Player;
+import base.Settings;
+import game.GameCanvas;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GameWindow extends JFrame {
-
     GameCanvas canvas;
 
     public GameWindow() {
-        //setup Window
-        this.setSize( 800 ,600);
-        this.setResizable(false); // không cho người dùng chỉnh sửa kích thước
+        //setup window
+        this.setSize(Settings.SCREEN_WIDHT, Settings.SCREEN_HEIGHT);
+        this.setResizable(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setUpEventListtener();
-        // init game
+        this.setupEventListtener();
+        //init game
         this.canvas = new GameCanvas();
         this.add(canvas);
-        this.setVisible(true); // cho phép cửa sổ hiện ra
 
+        this.setVisible(true);
     }
 
-    private void setUpEventListtener() {
+    private void setupEventListtener() {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP){
+                if(e.getKeyCode() == KeyEvent.VK_W) {
                     KeyEventPress.isUpPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN){
-                    KeyEventPress.isDownPress = true;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT){
+                if(e.getKeyCode() == KeyEvent.VK_A) {
                     KeyEventPress.isLeftPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+                if(e.getKeyCode() == KeyEvent.VK_S) {
+                    KeyEventPress.isDownPress = true;
+                }
+                if(e.getKeyCode() == KeyEvent.VK_D) {
                     KeyEventPress.isRightPress = true;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                    KeyEventPress.isSpacePress = true;
+                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    KeyEventPress.isFirePress = true;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP){
+                if(e.getKeyCode() == KeyEvent.VK_W) {
                     KeyEventPress.isUpPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN){
-                    KeyEventPress.isDownPress = false;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT){
+                if(e.getKeyCode() == KeyEvent.VK_A) {
                     KeyEventPress.isLeftPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+                if(e.getKeyCode() == KeyEvent.VK_S) {
+                    KeyEventPress.isDownPress = false;
+                }
+                if(e.getKeyCode() == KeyEvent.VK_D) {
                     KeyEventPress.isRightPress = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                    KeyEventPress.isSpacePress = false;
+                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    KeyEventPress.isFirePress = false;
                 }
             }
-
-
         });
     }
 
-
     public void gameLoop() {
-        long delay = 1000/60;
+        long delay = 1000 / 60;
         long lastTime = 0;
-        while (true) {
+        while(true) {
             long currentTime = System.currentTimeMillis();
-            if( currentTime - lastTime > delay) {
-                canvas.run();
-                this.repaint();
+            if(currentTime - lastTime > delay) {
+                canvas.run(); //runAll()
+                this.repaint(); // renderAll()
+                //JFrame.repaint()
                 lastTime = currentTime;
             }
         }
     }
-
-    // paintCom
-
 }
-
