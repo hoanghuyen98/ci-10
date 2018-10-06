@@ -11,10 +11,12 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Physics{
     FrameCounter fireCounter;
+    BoxCollider collider;
     boolean onOff=false;
     public Player() {
+        super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImages(
                 "assets/images/players/straight/0.png",
                 "assets/images/players/straight/1.png",
@@ -28,6 +30,7 @@ public class Player extends GameObject {
         this.position = new Vector2D(Settings.START_PLAYER_POSITION_X
                 , Settings.START_PLAYER_POSITION_Y);
         this.fireCounter = new FrameCounter(10);
+        this.collider = new BoxCollider(28,28);
     }
 
     @Override
@@ -55,9 +58,7 @@ public class Player extends GameObject {
         if(!KeyEventPress.isFirePress){
 
             if( fireCounterRun && this.fireCounter.check<3 && onOff==true){
-
-                    this.fireCounter.check++;
-
+                this.fireCounter.check++;
                 this.fire();
             }
 
@@ -71,9 +72,10 @@ public class Player extends GameObject {
     public void fire() {
 //        PlayerBullet bullet = new PlayerBullet();
 //        GameCanvas.playerBullets.add(bullet);
-        PlayerBullet bullet = GameObject.create(PlayerBullet.class);
-        LeftBullets bullet1 = GameObject.create(LeftBullets.class);
-        RightBullets bullet2 = GameObject.create(RightBullets.class);
+        PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
+        LeftBullets bullet1 = GameObject.recycle(LeftBullets.class);
+        RightBullets bullet2 = GameObject.recycle(RightBullets.class);
+//        bullet.velocit
         bullet.position.set(this.position.x, this.position.y);
         bullet1.position.set(this.position.x, this.position.y);
         bullet2.position.set(this.position.x, this.position.y);
@@ -83,5 +85,9 @@ public class Player extends GameObject {
 
     public void move(int translateX, int translateY) {
         this.position.addThis(translateX, translateY);
+    }
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.collider;
     }
 }

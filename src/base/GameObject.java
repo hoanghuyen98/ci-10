@@ -21,15 +21,50 @@ public class GameObject {
         }
     }
 
+    public static <E extends GameObject> E recycle(Class<E> childClass){
+        // 1: Kiểm tra có gameObject thỏa mãn yêu cầu (isActive == false && gameObject go instanceof childClass) ko
+        for(GameObject go: gameObjects){
+            if(!go.isActive && childClass.isAssignableFrom(go.getClass())){
+                go.isActive = true;
+                return (E) go;
+            }
+        }
+        // có thì dùng lại:
+        //ko có thì tạo mới
+        return create(childClass);
+        // trả về gameObject
+
+    }
+
+    public static <E extends GameObject> E intersect(Class<E> childClass, Physics physics){
+        for(GameObject go: gameObjects){
+            if(go.isActive && childClass.isAssignableFrom(go.getClass())
+            && go instanceof Physics){
+                Physics physicsGo = (Physics) go;
+                boolean intersected = physics.getBoxCollider().intersect(physicsGo, (GameObject)physics);
+                if (intersected){
+                    return (E)physicsGo;
+                }
+            }
+        }
+        return null;
+    }
+
     public static void runAll() {
-        for(GameObject go : gameObjects) {
-            go.run();
+        for(int i = 0; i< gameObjects.size(); i++){
+            GameObject go = gameObjects.get(i);
+//        for(GameObject go : gameObjects) {
+            if(go.isActive) {
+                go.run();
+            }
         }
     }
 
     public static void renderAll(Graphics g) {
         for(GameObject go : gameObjects) {
-            go.render(g);
+            if(go.isActive) {
+                go.render(g);
+            }
         }
         gameObjects.addAll(newGameObjects);
         newGameObjects.clear();
@@ -39,11 +74,20 @@ public class GameObject {
 
     Renderer renderer;
     public Vector2D position;
+    public boolean isActive;
 
-    public GameObject() {}
+    public GameObject() {
+        this.isActive = true;
+    }
 
-    public GameObject(BufferedImage image) {
+    public GameObject(BufferedImage image)
+    {
+        this.isActive = true;
         this.position = new Vector2D(0, 0);
+    }
+
+    public void destroy(){
+        this.isActive = false;
     }
 
     public void run() {

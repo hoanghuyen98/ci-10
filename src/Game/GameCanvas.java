@@ -14,8 +14,8 @@ public class GameCanvas extends JPanel {
 
     public GameCanvas() {
         this.background = GameObject.create(Background.class);
-        this.player = GameObject.create(Player.class);
-        Enemy enemy = GameObject.create(Enemy.class);
+        this.player = GameObject.recycle(Player.class);
+        Enemy enemy = GameObject.recycle(Enemy.class);
     }
 
     public void run() {
