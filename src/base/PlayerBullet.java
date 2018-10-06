@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class PlayerBullet extends GameObject implements Physics{
 //    Vector2D velocity;
-    BoxCollider collider;
+    public BoxCollider collider;
     ArrayList<BufferedImage> images;
     public PlayerBullet() {
         super();
