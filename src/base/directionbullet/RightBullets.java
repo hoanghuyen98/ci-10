@@ -1,6 +1,10 @@
 package base.directionbullet;
 
 import base.*;
+import base.enemy.Enemy;
+import base.physics.BoxCollider;
+import base.physics.Physics;
+import base.player.PlayerBullet;
 
 public class RightBullets extends PlayerBullet implements Physics {
     @Override

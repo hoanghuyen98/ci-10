@@ -1,14 +1,18 @@
-package base;
+package base.player;
 
+import base.physics.BoxCollider;
+import base.GameObject;
+import base.physics.Physics;
+import base.Vector2D;
+import base.enemy.Enemy;
 import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayerBullet extends GameObject implements Physics{
+public class PlayerBullet extends GameObject implements Physics {
 //    Vector2D velocity;
     public BoxCollider collider;
     ArrayList<BufferedImage> images;

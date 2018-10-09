@@ -1,19 +1,22 @@
-package base;
+package base.player;
 
+import base.*;
 import base.counter.FrameCounter;
 import base.directionbullet.LeftBullets;
 import base.directionbullet.RightBullets;
+import base.event.KeyEventPress;
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.renderer.AnimationRenderer;
-import base.renderer.SingleImageRenderer;
-import game.GameCanvas;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject implements Physics{
+public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
     BoxCollider collider;
+    int hp;
     boolean onOff=false;
     public Player() {
         super();
@@ -30,7 +33,8 @@ public class Player extends GameObject implements Physics{
         this.position = new Vector2D(Settings.START_PLAYER_POSITION_X
                 , Settings.START_PLAYER_POSITION_Y);
         this.fireCounter = new FrameCounter(10);
-        this.collider = new BoxCollider(28,28);
+        this.collider = new BoxCollider(32,48);
+        this.hp =20;
     }
 
     @Override
@@ -82,12 +86,22 @@ public class Player extends GameObject implements Physics{
         this.fireCounter.reset();
     }
 
-
     public void move(int translateX, int translateY) {
         this.position.addThis(translateX, translateY);
     }
+   // check dame, damege : số dame nhận vào
+    public void takeDamege(int damege){
+        this.hp -= damege;
+        if(this.hp <= 0){
+            this.destroy();
+//            this.isActive = false;
+            hp = 0;
+        }
+    }
+
     @Override
     public BoxCollider getBoxCollider() {
+
         return this.collider;
     }
 }
